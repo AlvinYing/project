@@ -1,0 +1,29 @@
+version: '3'
+services:
+  app:
+    image: 'php:8.1-apache'  # Updated PHP version
+    ports:
+      - '8000:80'
+    volumes:
+      - .:/var/www/html
+      - ./apache-config:/etc/apache2/sites-enabled
+    networks:
+      - laravel-net
+
+  db:
+    image: 'mysql:5.7'
+    environment:
+      MYSQL_DATABASE: project
+      MYSQL_USER: project
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - laravel-net
+
+networks:
+  laravel-net:
+
+volumes:
+  dbdata:
